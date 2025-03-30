@@ -36,9 +36,20 @@ def create_graph():
                 node_two = int(parts[0][3])
                 cost = int(parts[1][1])
                 graph.add_neighbor(node_one, node_two, cost)
+            elif stage is FileReadStage.ORIGIN:
+                graph.set_origin(int(line[0]))
+            elif stage is FileReadStage.DESTINATIONS:
+                parts = [x.strip() for x in line.split(";")]
+                graph.set_goals(parts)
+                stage = FileReadStage.END
 
             # print(graph.node_positions.items())
-            print(graph.edges)
+            # print(graph.edges)
+            # print(graph.origin)
+            print(graph.goals)
+
+    return graph
+
 
 def update_stage(current_stage, line):
     if line == "Nodes:":
@@ -52,4 +63,5 @@ def update_stage(current_stage, line):
     return current_stage, False
 
 
-create_graph()
+graph = create_graph()
+print(graph.edges)
