@@ -32,4 +32,4 @@ class Graph:
         return node in self.goals
 
     def get_edges(self, node):
-        return self.nodes[node]
+        return self.edges[node]

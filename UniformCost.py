@@ -1,5 +1,5 @@
 import heapq
-import Graph
+from Graph import Graph
 
 class UniformCost:
 
@@ -8,20 +8,22 @@ class UniformCost:
 
     def uniform_cost_search(self):
         frontier = []
-        frontier = heapq.heappush(frontier, [0, self.graph.origin, [self.graph.origin]]) 
+        heapq.heappush(frontier, [0, self.graph.origin, [self.graph.origin]]) 
         explored = {}
         found_destinations = {}
 
         while frontier:
             cost, node, path = heapq.heappop(frontier)
+            print(node, self.graph.goals)
 
             if self.graph.is_goal(node):
+                print("TEST")
                 if node not in found_destinations:
                     found_destinations[node] = (path, cost)
                 if len(found_destinations) == len(self.graph.goals):
                     return found_destinations.items()
 
-            if node in explored and cost <= explored[node]:
+            if node in explored and explored[node] <= cost:
                 continue
 
             explored[node] = cost

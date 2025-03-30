@@ -1,5 +1,7 @@
+from UniformCost import UniformCost
 from Graph import Graph
 from enum import Enum
+
 
 class FileReadStage(Enum):
     START = 0
@@ -39,14 +41,14 @@ def create_graph():
             elif stage is FileReadStage.ORIGIN:
                 graph.set_origin(int(line[0]))
             elif stage is FileReadStage.DESTINATIONS:
-                parts = [x.strip() for x in line.split(";")]
+                parts = [int(x.strip()) for x in line.split(";")]
                 graph.set_goals(parts)
                 stage = FileReadStage.END
 
             # print(graph.node_positions.items())
             # print(graph.edges)
             # print(graph.origin)
-            print(graph.goals)
+            # print(graph.goals)
 
     return graph
 
@@ -65,3 +67,6 @@ def update_stage(current_stage, line):
 
 graph = create_graph()
 print(graph.edges)
+
+solution = UniformCost(graph)
+print(solution.uniform_cost_search())
