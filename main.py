@@ -30,8 +30,15 @@ def create_graph():
                 node_x = int(neighbor_edge[1])
                 node_y = int(neighbor_edge[-2])
                 graph.add_node(node_number, node_x, node_y)
+            elif stage is FileReadStage.EDGES:
+                parts = line.split(":")
+                node_one = int(parts[0][1])
+                node_two = int(parts[0][3])
+                cost = int(parts[1][1])
+                graph.add_neighbor(node_one, node_two, cost)
 
-            print(graph.node_positions.items())
+            # print(graph.node_positions.items())
+            print(graph.edges)
 
 def update_stage(current_stage, line):
     if line == "Nodes:":
