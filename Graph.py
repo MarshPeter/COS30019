@@ -13,7 +13,11 @@ class Graph:
     def __init__(self):
         self.origin = None
         self.goals = []
-        self.nodes = defaultdict(list); 
+        self.edges = defaultdict(list)
+        self.node_positions = defaultdict(tuple) # {node_number: x, y}
+
+    def add_node(self, node, pos_x, pos_y):
+        self.node_positions[node] = (pos_x, pos_y)
 
     def set_origin(self, origin):
         self.origin = origin
@@ -21,11 +25,11 @@ class Graph:
     def set_goal(self, goal):
         self.goals.append(goal)
 
-    def add_neighor(self, node, neighbor_node, cost):
-        self.nodes[node].append((neighbor_node, cost))
+    def add_neighbor(self, node, neighbor_node, cost):
+        self.edges[node].append((neighbor_node, cost))
 
     def is_goal(self, node):
         return node in self.goals
 
-    def get_neighbors(self, node):
+    def get_edges(self, node):
         return self.nodes[node]
