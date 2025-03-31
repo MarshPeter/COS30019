@@ -13,14 +13,20 @@ class FileReadStage(Enum):
 
 print("Hello, World!")
 
-def create_graph():
+def create_graphs():
+    graphs = []
     graph = Graph()
     stage = FileReadStage.START
-    with open('./basic_test.txt', 'r') as file:
+    with open('./multi_tests.txt', 'r') as file:
         for line in file:
             #print(line.strip())
             data = line.strip()
             print(stage)
+
+            if stage == FileReadStage.END and data == "Nodes:":
+                graph = Graph()
+                stage = FileReadStage.START
+
             stage, changed = update_stage(stage, data)
 
             if changed: continue
@@ -44,13 +50,14 @@ def create_graph():
                 parts = [int(x.strip()) for x in line.split(";")]
                 graph.set_goals(parts)
                 stage = FileReadStage.END
+                graphs.append(graph)
 
             # print(graph.node_positions.items())
             # print(graph.edges)
             # print(graph.origin)
             # print(graph.goals)
 
-    return graph
+    return graphs
 
 
 def update_stage(current_stage, line):
@@ -65,8 +72,13 @@ def update_stage(current_stage, line):
     return current_stage, False
 
 
-graph = create_graph()
-print(graph.edges)
+graphs = create_graphs()
+solutions = []
 
-solution = UniformCost(graph)
-print(solution.uniform_cost_search())
+for graph in graphs:
+    solution = UniformCost(graph)
+    solutions.append(solution.uniform_cost_search())
+
+# solution = UniformCost(graph)
+# print(solution.uniform_cost_search())
+print(solutions)
