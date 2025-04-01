@@ -12,8 +12,6 @@ class FileReadStage(Enum):
     DESTINATIONS = 4 # we are reading the destinations
     END = 5 # We have completed the graph
 
-print("Hello, World!")
-
 # returns a list of Graph objects based of file read
 def create_graphs():
     graphs = []
@@ -21,9 +19,13 @@ def create_graphs():
     stage = FileReadStage.START
 
     # read file, auto close when at EOF
-    with open('./multi_tests.txt', 'r') as file:
+    with open('./test_three.txt', 'r') as file:
         for line in file:
             data = line.strip() # remove whitespace
+
+            # skip blank lines (usually end of file in generated tests)
+            if data == "":
+                continue
 
             # If this file holds multiple graphs, this starts a new graph after one is finished
             if stage == FileReadStage.END and data == "Nodes:":
@@ -59,7 +61,7 @@ def create_graphs():
             elif stage is FileReadStage.DESTINATIONS:
                 # read in destinations and add to current graph
                 # all destinations are in form: 5; 4
-                parts = [int(x.strip()) for x in line.split(";")]
+                parts = [int(x.strip()) for x in line.split(";") if x.strip() != ""]
                 graph.set_goals(parts)
                 stage = FileReadStage.END
                 graphs.append(graph)

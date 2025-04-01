@@ -51,4 +51,4 @@ class UniformCost:
                 heapq.heappush(frontier, (cumulative, edge[0], new_path))
 
         # If there is no valid path
-        return None, float('inf')
+        return found_destinations.items()
