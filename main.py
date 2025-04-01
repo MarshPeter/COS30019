@@ -1,3 +1,4 @@
+import re
 from UniformCost import UniformCost
 from Graph import Graph
 from enum import Enum
@@ -37,24 +38,24 @@ def create_graphs():
             if stage is FileReadStage.NODES:
                 # Read in nodes and add them to current graph
                 # All nodes in form: 1: (4, 1)
-                parts = line.split(":")
-                neighbor_edge = parts[1].strip()
-                node_number = int(parts[0])
-                node_x = int(neighbor_edge[1])
-                node_y = int(neighbor_edge[-2])
+                values = re.findall(r'\d+', line)
+                node_number = int(values[0])
+                node_x = int(values[1])
+                node_y = int(values[2])
                 graph.add_node(node_number, node_x, node_y)
             elif stage is FileReadStage.EDGES:
                 # read in edges and add them to current graph
                 # all edges in form: (2,1): 2
-                parts = line.split(":")
-                node_one = int(parts[0][1])
-                node_two = int(parts[0][3])
-                cost = int(parts[1][1])
+                values = re.findall(r'\d+', line)
+                node_one = int(values[0])
+                node_two = int(values[1])
+                cost = int(values[2])
                 graph.add_neighbor(node_one, node_two, cost)
             elif stage is FileReadStage.ORIGIN:
                 # read in origin and add to current graph
                 # all origins in form: 1
-                graph.set_origin(int(line[0]))
+                values = re.findall(r'\d+', line)
+                graph.set_origin(int(values[0]))
             elif stage is FileReadStage.DESTINATIONS:
                 # read in destinations and add to current graph
                 # all destinations are in form: 5; 4
