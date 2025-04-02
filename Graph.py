@@ -33,3 +33,7 @@ class Graph:
 
     def get_edges(self, node):
         return self.edges[node]
+
+    # returns a tuple where the position is (pos_x, pos_y)
+    def get_position(self, node):
+        return self.node_positions[node]
