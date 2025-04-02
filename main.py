@@ -1,5 +1,6 @@
 import re
 from UniformCost import UniformCost
+from RecursiveBFS import RecursiveBFS
 from Graph import Graph
 from enum import Enum
 
@@ -80,6 +81,13 @@ def update_stage(current_stage, line):
     return current_stage, False
 
 graphs = create_graphs()
+solutions = []
+
+for graph in graphs:
+    solution = RecursiveBFS(graph)
+    solutions.append(solution.rbfs())
+
+print(solutions)
 solutions = []
 
 for graph in graphs:

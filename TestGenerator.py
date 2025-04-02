@@ -38,8 +38,8 @@ with open(write_file, "w") as file:
             count = 0
 
             while True:
-                node_1 = floor(random.random() * nodes) 
-                node_2 = floor(random.random() * nodes)
+                node_1 = floor(random.random() * nodes) + 1
+                node_2 = floor(random.random() * nodes) + 1
 
                 if count == 1000:
                     print("Breakpoint")
@@ -51,7 +51,7 @@ with open(write_file, "w") as file:
                     count += 1
                     continue
 
-                cost = floor(random.random() * nodes)
+                cost = max(floor(random.random() * nodes), 1) # so that every cost is at least 1
                 edges[node_1] = node_2
                 file.write(f"({node_1},{node_2}): {cost}\n")
                 break
@@ -87,8 +87,8 @@ with open(write_file, "w") as file:
 
         # add more nodes from the start
         if len(destinations) < destination_count:
-            for i in range(nodes):
-                if i not in destinations:
+            for i in range(1, nodes + 1):
+                if i not in destinations and i != origin_node:
                     file.write(f"{i}; ")
                 if destination_count == len(destinations):
                     break
