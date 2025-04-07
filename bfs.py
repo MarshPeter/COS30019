@@ -1,74 +1,32 @@
 from Graph import Graph
-import heapq
 from collections import deque
 
-def breadth_first_search(problem):
-    node = node(problem.initial)
-    if problem.goal_test(node.state):
-        return node
-    frontier = deque([node])
-    explored = set()
-    while frontier:
-        node = frontier.popleft()
-        explored.add(node.state)
-        for child in node.expand(problem):
-            if child.state not in explored and child not in frontier:
-                if problem.goal_test(child.state):
-                    return child
-                frontier.append(child)
-    return None
+class BFS:
 
+    def __init__(self, graph: Graph):
+        self.graph = graph
 
-class Graph:
-    """A graph connects nodes (vertices) by edges (links). Each edge can also
-    have a length associated with it. The constructor call is something like:
-        g = Graph({'A': {'B': 1, 'C': 2})
-    this makes a graph with 3 nodes, A, B, and C, with an edge of length 1 from
-    A to B,  and an edge of length 2 from A to C. You can also do:
-        g = Graph({'A': {'B': 1, 'C': 2}, directed=False)
-    This makes an undirected graph, so inverse links are also added. The graph
-    stays undirected; if you add more links with g.connect('B', 'C', 3), then
-    inverse link is also added. You can use g.nodes() to get a list of nodes,
-    g.get('A') to get a dict of links out of A, and g.get('A', 'B') to get the
-    length of the link from A to B. 'Lengths' can actually be any object at
-    all, and nodes can be any hashable object."""
+    def breadth_first_search(self):
+        explored = set()
+        frontier = deque([(self.graph.origin, [self.graph.origin])]) # starts at root node (node, path)
+        found_destinations = {}
 
-    def __init__(self, graph_dict=None, directed=True):
-        self.graph_dict = graph_dict or {}
-        self.directed = directed
-        if not directed:
-            self.make_undirected()
+        while frontier:
+            node, path = frontier.popleft()
 
-    def make_undirected(self):
-        """Make a digraph into an undirected graph by adding symmetric edges."""
-        for a in list(self.graph_dict.keys()):
-            for (b, dist) in self.graph_dict[a].items():
-                self.connect1(b, a, dist)
+            # if current node is a destination
+            if self.graph.is_goal(node):
+                if node not in found_destinations:
+                    found_destinations[node] = path
+                if len(found_destinations) == len(self.graph.goals):
+                    break # found all destinations
 
-    def connect(self, A, B, distance=1):
-        """Add a link from A and B of given distance, and also add the inverse
-        link if the graph is undirected."""
-        self.connect1(A, B, distance)
-        if not self.directed:
-            self.connect1(B, A, distance)
+            if node not in explored:
+                explored.add(node)
+                # for neighbour in the list of neighbours...
+                for neighbor, _ in self.graph.get_edges(node): # neighbor_node, cost (cost ignored)
+                    if neighbor not in explored:
+                        frontier.append((neighbor, path + [neighbor]))
 
-    def connect1(self, A, B, distance):
-        """Add a link from A to B of given distance, in one direction only."""
-        self.graph_dict.setdefault(A, {})[B] = distance
-
-    def get(self, a, b=None):
-        """Return a link distance or a dict of {node: distance} entries.
-        .get(a,b) returns the distance or None;
-        .get(a) returns a dict of {node: distance} entries, possibly {}."""
-        links = self.graph_dict.setdefault(a, {})
-        if b is None:
-            return links
-        else:
-            return links.get(b)
-
-    def nodes(self):
-        """Return a list of nodes in the graph."""
-        s1 = set([k for k in self.graph_dict.keys()])
-        s2 = set([k2 for v in self.graph_dict.values() for k2, v2 in v.items()])
-        nodes = s1.union(s2)
-        return list(nodes)
+        # display all paths       
+        return found_destinations
