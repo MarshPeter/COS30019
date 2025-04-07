@@ -1,7 +1,7 @@
 import re
 from UniformCost import UniformCost
 from RecursiveBFS import RecursiveBFS
-# from bfs import  bfs
+from bfs import  BFS
 from Graph import Graph
 from enum import Enum
 
@@ -94,5 +94,12 @@ solutions = []
 for graph in graphs:
     solution = UniformCost(graph)
     solutions.append(solution.uniform_cost_search())
+
+print(solutions)
+solutions = []
+
+for graph in graphs:
+    solution = BFS(graph)
+    solutions.append(solution.breadth_first_search())
 
 print(solutions)
