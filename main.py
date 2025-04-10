@@ -1,8 +1,8 @@
 import re
 from UniformCost import UniformCost
 from RecursiveBFS import RecursiveBFS
-from bfs import  BFS
-from greedy import Greedy
+from BFS import  BFS
+from Greedy import Greedy
 from Graph import Graph
 from enum import Enum
 
