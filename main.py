@@ -2,6 +2,7 @@ import re
 from UniformCost import UniformCost
 from RecursiveBFS import RecursiveBFS
 from bfs import  BFS
+from greedy import Greedy
 from Graph import Graph
 from enum import Enum
 
@@ -101,5 +102,12 @@ solutions = []
 for graph in graphs:
     solution = BFS(graph)
     solutions.append(solution.breadth_first_search())
+
+print(solutions)
+solutions = []
+
+for graph in graphs:
+    solution = Greedy(graph)
+    solutions.append(solution.gbfs())
 
 print(solutions)
