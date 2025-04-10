@@ -23,3 +23,17 @@ class AStar:
             if node in explored and explored[node] <= g:
                 continue
             explored[node] = g
+
+            if self.graph.is_goal(node):
+                if node not in found_destinations:
+                    found_destinations[node] = (path, len(explored))
+                if len(found_destinations) == len(self.graph.goals):
+                    return found_destinations.items()
+
+            for neighbor, cost in self.graph.get_edges(node):
+                new_g = g + cost
+                h = min([self.heuristic(neighbor, goal) for goal in self.graph.goals])
+                new_f = new_g + h
+                heapq.heappush(frontier, (new_f, new_g, neighbor, path + [neighbor]))
+
+        return None, float('inf')
