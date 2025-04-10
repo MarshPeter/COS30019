@@ -21,9 +21,11 @@ class RecursiveBFS():
         f = cost + self.__SLD(curr_node, goal)
 
         if curr_node == goal:
+            # This is the base case if we find a target
             return (path, f)
 
         if f > f_limit:
+            # This is the base case if we are giving up on this path
             return None, f
 
         successors = []
@@ -36,6 +38,7 @@ class RecursiveBFS():
             f_val = max(new_cost + self.__SLD(neighbor, goal), f)
             successors.append((neighbor, new_cost, f_val))
 
+        # dead end base case
         if not successors:
             return None, float('inf')
 
@@ -46,8 +49,10 @@ class RecursiveBFS():
                 return None, best[2]
 
             alternative = successors[1][2] if len(successors) > 1 else float('inf')
-            new_path, best_f = self.__rbfs(path + [best[0]], best[1], min(f_limit, alternative), goal)
+            # this line makes it recursive. 
+            new_path, best_f = self.__rbfs(path + [best[1]], best[1], min(f_limit, alternative), goal)
             successors[0] = (best[0], best[1], best_f)
+            # This returns the final answer
             if new_path is not None:
                 return new_path, best_f
         

@@ -22,7 +22,7 @@ def create_graphs():
     stage = FileReadStage.START
 
     # read file, auto close when at EOF
-    with open('./test_three.txt', 'r') as file:
+    with open('./multi_tests.txt', 'r') as file:
         for line in file:
             data = line.strip() # remove whitespace
 
@@ -90,11 +90,11 @@ for graph in graphs:
     solutions.append(solution.rbfs())
 
 print(solutions)
-solutions = []
+# solutions = []
 
-for graph in graphs:
-    solution = UniformCost(graph)
-    solutions.append(solution.uniform_cost_search())
+# for graph in graphs:
+#     solution = UniformCost(graph)
+#     solutions.append(solution.uniform_cost_search())
 
 print(solutions)
 solutions = []

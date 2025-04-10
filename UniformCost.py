@@ -24,7 +24,7 @@ class UniformCost:
             # removes item with smallest cost, reorganizes so that smallest cost is next again
             cost, node, path = heapq.heappop(frontier)
 
-            # we found a destinatioon
+            # we found a destination
             if self.graph.is_goal(node):
                 # add a new destination if not seen before
                 if node not in found_destinations:
