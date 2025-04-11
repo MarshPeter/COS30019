@@ -8,7 +8,7 @@ tests = 100
 
 with open(write_file, "w") as file:
     for i in range(tests):
-        nodes = max(floor(random.random() * 100) + 1, 10)
+        nodes = max(floor(random.random() * 15) + 1, 10)
         taken_positions = defaultdict(list)
 
         file.write("Nodes:\n")
