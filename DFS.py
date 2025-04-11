@@ -20,10 +20,10 @@ class DepthFirst:
                 if node not in found_destinations:
                     found_destinations[node] = (path, len(visited))
                 if len(found_destinations) == len(self.graph.goals):
-                    return found_destinations.items()
+                    return list(found_destinations.items())
 
             for neighbor, _ in sorted(self.graph.get_edges(node), reverse=True):
                 if neighbor not in visited:
                     stack.append((neighbor, path + [neighbor]))
 
-        return None, float('inf')
+        return list(found_destinations.items())
