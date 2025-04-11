@@ -10,7 +10,6 @@ class RecursiveBFS():
     def rbfs(self):
         results = []
         for goal in self.graph.goals:
-            print(goal, self.graph.goals)
             results.append(self.__rbfs([self.graph.origin], 0, float("inf"), goal))
 
         return results
@@ -50,21 +49,15 @@ class RecursiveBFS():
 
             alternative = successors[1][2] if len(successors) > 1 else float('inf')
             # this line makes it recursive. 
-            new_path, best_f = self.__rbfs(path + [best[1]], best[1], min(f_limit, alternative), goal)
+            new_path, best_f = self.__rbfs(path + [best[0]], best[1], min(f_limit, alternative), goal)
             successors[0] = (best[0], best[1], best_f)
             # This returns the final answer
             if new_path is not None:
                 return new_path, best_f
         
     def __SLD(self, node, goal):
-        try:
-            (node_x, node_y) = self.graph.get_position(node)
-            (goal_x, goal_y) = self.graph.get_position(goal)
-            return sqrt((goal_x - node_x) ** 2 + (goal_y - node_y) ** 2)
-        except:
-            print(node, goal)
-            print(self.graph.node_positions)
-            print(self.graph.edges)
-            exit(1)
+        (node_x, node_y) = self.graph.get_position(node)
+        (goal_x, goal_y) = self.graph.get_position(goal)
+        return sqrt((goal_x - node_x) ** 2 + (goal_y - node_y) ** 2)
             
 

@@ -83,6 +83,7 @@ def update_stage(current_stage, line):
     return current_stage, False
 
 graphs = create_graphs()
+print("Recursive Best First Search:")
 solutions = []
 
 for graph in graphs:
@@ -90,24 +91,25 @@ for graph in graphs:
     solutions.append(solution.rbfs())
 
 print(solutions)
+print("Uniform Cost Search")
+solutions = []
+
+for graph in graphs:
+    solution = UniformCost(graph)
+    solutions.append(solution.uniform_cost_search())
+
+print(solutions)
 # solutions = []
 
 # for graph in graphs:
-#     solution = UniformCost(graph)
-#     solutions.append(solution.uniform_cost_search())
+#     solution = BFS(graph)
+#     solutions.append(solution.breadth_first_search())
 
-print(solutions)
-solutions = []
+# print(solutions)
+# solutions = []
 
-for graph in graphs:
-    solution = BFS(graph)
-    solutions.append(solution.breadth_first_search())
+# for graph in graphs:
+#     solution = Greedy(graph)
+#     solutions.append(solution.gbfs())
 
-print(solutions)
-solutions = []
-
-for graph in graphs:
-    solution = Greedy(graph)
-    solutions.append(solution.gbfs())
-
-print(solutions)
+# print(solutions)
