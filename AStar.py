@@ -7,9 +7,12 @@ class AStar:
         self.graph = graph
 
     def heuristic(self, node, goal):
-        x1, y1 = self.graph.node_positions[node]
-        x2, y2 = self.graph.node_positions[goal]
-        return math.hypot(x2 - x1, y2 - y1)
+        try:
+            x1, y1 = self.graph.node_positions[node]
+            x2, y2 = self.graph.node_positions[goal]
+            return math.hypot(x2 - x1, y2 - y1)
+        except:
+            print(node, goal)
 
     def astar(self):
         frontier = []

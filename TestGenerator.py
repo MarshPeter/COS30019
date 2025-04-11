@@ -42,8 +42,7 @@ with open(write_file, "w") as file:
                 node_2 = floor(random.random() * nodes) + 1
 
                 if count == 1000:
-                    print("Breakpoint")
-                    continue
+                    break
 
                 if node_1 == node_2 \
                     or (node_1 in edges and edges[node_1] == node_2) \
@@ -57,17 +56,19 @@ with open(write_file, "w") as file:
                 break
 
         file.write("Origin:\n")
-        origin_node = floor(random.random() * nodes)
+        origin_node = floor(random.random() * nodes) + 1
         file.write(f"{origin_node}\n")
 
         file.write("Destinations:\n")
-        destination_count = max(floor(random.random() * nodes), 1)
+        destination_count = min(floor(random.random() * nodes), nodes - 1)
         destinations = set()
         # this is to check if destinations attempts have failed a nodes number of times
         # at that point we will just loop through all nodes until we have enough destinations
         attempts = 0
         while True:
-            destination = floor(random.random() * nodes)
+            # ensure that a destination is an actually possible node
+            destination = floor(random.random() * nodes) + 1
+
 
             if destination in destinations or destination == origin_node:
                 attempts += 1
@@ -87,12 +88,14 @@ with open(write_file, "w") as file:
 
         # add more nodes from the start
         if len(destinations) < destination_count:
+            # So that the next number isn't concatenated to the previous number
+            file.write("; ")
             for i in range(1, nodes + 1):
                 if i not in destinations and i != origin_node:
                     file.write(f"{i}; ")
+                    destinations.add(i)
                 if destination_count == len(destinations):
                     break
-        print(destination_count, len(destinations), nodes)
 
         file.write("\n")
     

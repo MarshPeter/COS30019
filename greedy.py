@@ -8,14 +8,17 @@ class Greedy:
 
     # Heuristic function
     def Hn (self, node, goal):
-        x1, y1 = self.graph.node_positions[node]
+        print(node, goal, self.graph.node_positions[node], self.graph.node_positions[goal])
         x2, y2 = self.graph.node_positions[goal]
+        x1, y1 = self.graph.node_positions[node]
         return math.hypot(x2 - x1, y2 - y1)
     
     def gbfs(self):
         results = []
+        i = 1
         for goal in self.graph.goals:
-            print(goal, self.graph.goals)
+            print(i)
+            i += 1
             results.append(self.__gbfs([self.graph.origin], goal)) # Initialise path list with origin node
         return results
     
@@ -42,7 +45,7 @@ class Greedy:
             
             # Exploring neighbors
             for neighbor, _ in self.graph.get_edges(current_node):
-                if neighbor not in explored:
+                if neighbor not in explored and neighbor not in frontier:
                     # If neighbor node has not been explored, add it to frontier with its path and heuristic value
                     heapq.heappush(frontier, (self.Hn(neighbor, goal), neighbor, path + [neighbor]))
         
