@@ -78,11 +78,16 @@ for graph in graphs:
             print(f"{node} => ", end="")
         print("goal found")
 
-# print("Astar")
-# solutions = []
+print("A* Search:")
+graph_count = 0
 
-# for graph in graphs:
-#     solution = AStar(graph)
-#     solutions.append(solution.astar())
-
-# print(solutions)
+for graph in graphs:
+    problem = AStar(graph)
+    solutions = problem.astar()
+    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
+    graph_count += 1
+    for solution in solutions:
+        print("Start node => ", end="")
+        for node in solution[1][0]:
+            print(f"{node} => ", end="")
+        print("goal found")

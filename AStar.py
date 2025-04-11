@@ -7,12 +7,9 @@ class AStar:
         self.graph = graph
 
     def heuristic(self, node, goal):
-        try:
-            x1, y1 = self.graph.node_positions[node]
-            x2, y2 = self.graph.node_positions[goal]
-            return math.hypot(x2 - x1, y2 - y1)
-        except:
-            print(node, goal)
+        x1, y1 = self.graph.node_positions[node]
+        x2, y2 = self.graph.node_positions[goal]
+        return math.hypot(x2 - x1, y2 - y1)
 
     def astar(self):
         frontier = []
@@ -31,7 +28,7 @@ class AStar:
                 if node not in found_destinations:
                     found_destinations[node] = (path, len(explored))
                 if len(found_destinations) == len(self.graph.goals):
-                    return found_destinations.items()
+                    return list(found_destinations.items())
 
             for neighbor, cost in self.graph.get_edges(node):
                 new_g = g + cost
@@ -39,4 +36,4 @@ class AStar:
                 new_f = new_g + h
                 heapq.heappush(frontier, (new_f, new_g, neighbor, path + [neighbor]))
 
-        return None, float('inf')
+        return list(found_destinations.items())
