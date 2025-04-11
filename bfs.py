@@ -29,4 +29,4 @@ class BFS:
                         frontier.append((neighbor, path + [neighbor]))
 
         # display all paths       
-        return found_destinations
+        return list(found_destinations.items())

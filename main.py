@@ -53,6 +53,20 @@ for graph in graphs:
 
 # print(solutions)
 
+print("Breadth First Search:")
+graph_count = 0
+
+for graph in graphs:
+    problem = BFS(graph)
+    solutions = problem.breadth_first_search()
+    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
+    graph_count += 1
+    for solution in solutions:
+        print("Start node => ", end="")
+        for node in solution[1]:
+            print(f"{node} => ", end="")
+        print("goal found")
+
 # print("DFS")
 # solutions = []
 
