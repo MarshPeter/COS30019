@@ -31,7 +31,7 @@ class UniformCost:
                     found_destinations[node] = (path, cost)
                 # if we have found all destinations, then return
                 if len(found_destinations) == len(self.graph.goals):
-                    return found_destinations.items() # return items for now, maybe change later
+                    return list(found_destinations.items()) # return items for now, maybe change later
 
             # if the current path to a node is more than what we have found previously
             # discard this path, it will not be optimal
@@ -51,4 +51,4 @@ class UniformCost:
                 heapq.heappush(frontier, (cumulative, edge[0], new_path))
 
         # If there is no valid path
-        return found_destinations.items()
+        return list(found_destinations.items())

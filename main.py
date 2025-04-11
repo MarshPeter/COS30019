@@ -28,17 +28,17 @@ for graph in graphs:
 # for graph in graphs:
 #     solution = UniformCost(graph)
 #     solutions.append(solution.uniform_cost_search())
-print("Recursive Best First Search:")
+print("Uniform Cost Search:")
 graph_count = 0
 
 for graph in graphs:
-    problem = RecursiveBestFirstSearch(graph)
-    solutions, count = problem.rbfs()
-    print(f"In graph {graph_count + 1}: {count} solutions were found out of {len(graph.goals)} goals")
+    problem = UniformCost(graph)
+    solutions = problem.uniform_cost_search()
+    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
     graph_count += 1
     for solution in solutions:
         print("Start node => ", end="")
-        for node in solution:
+        for node in solution[1][0]:
             print(f"{node} => ", end="")
         print("goal found")
 
