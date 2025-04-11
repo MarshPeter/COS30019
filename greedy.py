@@ -8,7 +8,6 @@ class Greedy:
 
     # Heuristic function
     def Hn (self, node, goal):
-        print(node, goal, self.graph.node_positions[node], self.graph.node_positions[goal])
         x2, y2 = self.graph.node_positions[goal]
         x1, y1 = self.graph.node_positions[node]
         return math.hypot(x2 - x1, y2 - y1)
@@ -17,9 +16,10 @@ class Greedy:
         results = []
         i = 1
         for goal in self.graph.goals:
-            print(i)
             i += 1
-            results.append(self.__gbfs([self.graph.origin], goal)) # Initialise path list with origin node
+            result = self.__gbfs([self.graph.origin], goal)
+            if result is not None:
+                results.append(result) # Initialise path list with origin node
         return results
     
     def __gbfs(self, path, goal):
