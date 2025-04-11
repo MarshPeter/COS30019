@@ -2,21 +2,20 @@
 from math import sqrt
 from Graph import Graph
 
-class RecursiveBFS():
+class RecursiveBestFirstSearch():
 
     def __init__(self, graph: Graph):
         self.graph = graph
 
     def rbfs(self):
         results = []
-        goals_found = 1
+        goals_found = 0
         for goal in self.graph.goals:
             explored = set()
             result = self.__rbfs([self.graph.origin], 0, float("inf"), goal, explored)
-            if result[0] is not None:
-                results.append(result)
+            if result[0] is not None and len(result[0]) != 0:
+                results.append(result[0])
                 goals_found += 1
-
         return results, goals_found
 
     def __rbfs(self, path, cost, f_limit, goal, explored):
@@ -66,7 +65,6 @@ class RecursiveBFS():
                 return new_path, best_f
         
     def __SLD(self, node, goal):
-        print(node, goal, self.graph.get_position(node), self.graph.get_position(goal))
         (node_x, node_y) = self.graph.get_position(node)
         (goal_x, goal_y) = self.graph.get_position(goal)
         return sqrt((goal_x - node_x) ** 2 + (goal_y - node_y) ** 2)

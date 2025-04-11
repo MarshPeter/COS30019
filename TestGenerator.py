@@ -4,7 +4,7 @@ import random
 write_file = "./test_three.txt"
 
 count = 0
-tests = 100
+tests = 12
 
 with open(write_file, "w") as file:
     for i in range(tests):
