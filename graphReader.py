@@ -19,7 +19,7 @@ def create_graphs(file_location):
     stage = FileReadStage.START
 
     # read file, auto close when at EOF
-    with open(file, 'r') as file:
+    with open(file_location, 'r') as file:
         for line in file:
             data = line.strip() # remove whitespace
 
