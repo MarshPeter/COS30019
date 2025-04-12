@@ -1,6 +1,10 @@
 from collections import defaultdict
 
 class Graph:
+    """
+        Contains all relevant information of a graph that is required by all possible solutions
+        member variables: 
+    """
     def __init__(self):
         self.origin = None # will become a number
         self.goals = None # will be a list of numbers
