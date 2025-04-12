@@ -25,7 +25,7 @@ def main():
 
     graphs = create_graphs(tests)
 
-    print(f"Running: {tests}")
+    print(f"{tests} {solution_type}")
     if solution_type == "all":
         solutions["bfs"](graphs)
         print()
