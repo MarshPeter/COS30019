@@ -1,93 +1,30 @@
-import re
-from UniformCost import UniformCost
-from RecursiveBFS import RecursiveBestFirstSearch
-from bfs import BFS
-from DFS import DepthFirst
+import sys
+
+from Printing import printAStar, printBFS, printDFS, printGreedy, printRecursiveBestFirstSearch, printUniformCost
 from graphReader import create_graphs
-from greedy import Greedy
-from AStar import AStar
 
-graphs = create_graphs()
-print("Recursive Best First Search:")
-graph_count = 0
+solutions = {
+    "bfs": printBFS,
+    "dfs": printDFS,
+    "greedy": printGreedy,
+    "astar": printAStar,
+    "uniform": printUniformCost,
+    "rbfs": printRecursiveBestFirstSearch
+}
 
-for graph in graphs:
-    problem = RecursiveBestFirstSearch(graph)
-    solutions, count = problem.rbfs()
-    print(f"In graph {graph_count + 1}: {count} solutions were found out of {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution:
-            print(f"{node} => ", end="")
-        print("goal found")
+def main():
+    print('argument list', sys.argv)
 
-print("Uniform Cost Search:")
-graph_count = 0
+    if len(sys.argv) != 3:
+        print("You need to use the following command:\n\npython main.py <filename> <method>")
+        print("\nExample:\n\npython main.py ./tests.txt bfs\n")
+        return
 
-for graph in graphs:
-    problem = UniformCost(graph)
-    solutions = problem.uniform_cost_search()
-    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution[1][0]:
-            print(f"{node} => ", end="")
-        print("goal found")
+    tests = sys.argv[1]
+    solution_type = sys.argv[2]
 
-print("Breadth First Search:")
-graph_count = 0
-
-for graph in graphs:
-    problem = BFS(graph)
-    solutions = problem.breadth_first_search()
-    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution[1]:
-            print(f"{node} => ", end="")
-        print("goal found")
-
-print("Depth First Search:")
-graph_count = 0
-
-for graph in graphs:
-    problem = DepthFirst(graph)
-    solutions = problem.dfs()
-    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution[1][0]:
-            print(f"{node} => ", end="")
-        print("goal found")
-
-print("Greedy Search:")
-graph_count = 0
-
-for graph in graphs:
-    problem = Greedy(graph)
-    solutions = problem.gbfs()
-    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution:
-            print(f"{node} => ", end="")
-        print("goal found")
-
-print("A* Search:")
-graph_count = 0
-
-for graph in graphs:
-    problem = AStar(graph)
-    solutions = problem.astar()
-    print(f"In graph {graph_count + 1}: {len(solutions)} solutions were found for {len(graph.goals)} goals")
-    graph_count += 1
-    for solution in solutions:
-        print("Start node => ", end="")
-        for node in solution[1][0]:
-            print(f"{node} => ", end="")
-        print("goal found")
+    graphs = create_graphs(tests)
+    solutions[solution_type](graphs) 
+    
+if __name__ == "__main__":
+    main()

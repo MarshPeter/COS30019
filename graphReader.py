@@ -1,7 +1,6 @@
 # Current stage of a graph being read
 from enum import Enum
 import re
-
 from Graph import Graph
 
 
@@ -14,13 +13,13 @@ class FileReadStage(Enum):
     END = 5 # We have completed the graph
 
 # returns a list of Graph objects based of file read
-def create_graphs():
+def create_graphs(file_location):
     graphs = []
     graph = Graph()
     stage = FileReadStage.START
 
     # read file, auto close when at EOF
-    with open('./test_three.txt', 'r') as file:
+    with open(file_location, 'r') as file:
         for line in file:
             data = line.strip() # remove whitespace
 

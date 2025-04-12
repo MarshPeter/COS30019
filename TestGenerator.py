@@ -1,7 +1,7 @@
 from math import floor
 from collections import defaultdict
 import random
-write_file = "./test_three.txt"
+write_file = "./tests.txt"
 
 count = 0
 tests = 12
