@@ -9,6 +9,10 @@ from greedy import Greedy
 # This was the original plan, but it didn't look good, so it was split up, but the
 # functionality harms nothing so the ability to do so stays
 
+# All these functions print in every line in the format specified in the assignment for every destination in the graph. That is:
+# goal number_of_nodes
+# path
+
 def printRecursiveBestFirstSearch(graphs):
     for graph in graphs:
         problem = RecursiveBestFirstSearch(graph)

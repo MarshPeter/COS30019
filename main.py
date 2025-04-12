@@ -1,5 +1,4 @@
 import sys
-
 from Printing import printAStar, printBFS, printDFS, printGreedy, printRecursiveBestFirstSearch, printUniformCost
 from graphReader import create_graphs
 
@@ -36,6 +35,7 @@ def main():
     # retrieve all graphs of test case (provided ones are one off test cases, but can handle multiple graphs in a single test case)
     graphs = create_graphs(tests)
 
+    # info print for the first line of specified output in the report of form: filename method
     print(f"{tests} {solution_type}")
     
     # for easier comparison
@@ -50,7 +50,7 @@ def main():
         print()
         solutions["uniform"](graphs)
         print()
-        solutions["rbfs"](graphs)
+        solutions["rbfs"](graphs) # This method doesn't print all nodes because of a known issue that is a bug fix for a infinite loop caused by cycles.
     elif solution_type in solutions.keys():
         # specific solution
         solutions[solution_type](graphs) 
