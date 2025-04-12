@@ -7,6 +7,7 @@ class RecursiveBestFirstSearch():
     def __init__(self, graph: Graph):
         self.graph = graph
 
+    # loops through all goals and runs the algorithm once for each
     def rbfs(self):
         results = []
         goals_found = 0
@@ -24,6 +25,8 @@ class RecursiveBestFirstSearch():
         if curr_node in explored:
             return None, float("inf")
 
+        # A known bug is infinite loops, therefore we have this set that ends cycles after
+        # This in turn creates another bug where not all paths are found
         explored.add(curr_node)
 
         f = cost + self.__SLD(curr_node, goal)
@@ -51,19 +54,23 @@ class RecursiveBestFirstSearch():
             return None, float('inf')
 
         while True:
+            # sort successors so that next two best are selected and observed
             successors.sort(key=lambda x: x[2])
             best = successors[0]
             if best[2] >= f_limit:
                 return None, best[2]
 
             alternative = successors[1][2] if len(successors) > 1 else float('inf')
-            # this line makes it recursive. 
+
+            # recursive call
             new_path, best_f = self.__rbfs(path + [best[0]], best[1], min(f_limit, alternative), goal, explored)
             successors[0] = (best[0], best[1], best_f)
+
             # This returns the final answer
             if new_path is not None:
                 return new_path, best_f
         
+    # heuristic function that is the straight line distance
     def __SLD(self, node, goal):
         (node_x, node_y) = self.graph.get_position(node)
         (goal_x, goal_y) = self.graph.get_position(goal)
